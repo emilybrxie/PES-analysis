@@ -39,25 +39,25 @@ function [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(tab, co
     %finding all RTs for trials fitting specific criteria
     for i=2:m-1
         %post-error
-        if new_tab(i,1)==correct && new_tab(i-1,1)==incorrect && new_tab(i+1,1)==correct
+        if new_tab(i,1)==1 && new_tab(i-1,1)==0 && new_tab(i+1,1)==1
             post_errors(1,end+1)=new_tab(i,2);
             %if con/incon included
             if n==3
-                if new_tab(i,3)==incongruent
+                if new_tab(i,3)=="incongruent"
                     incon_post_error(1,end+1)=new_tab(i,2);
-                elseif new_tab(i,3)==congruent
+                elseif new_tab(i,3)=="congruent"
                     con_post_error(1,end+1)=new_tab(i,2);
                 end
             end
         end
         %pre-error
-        if new_tab(i,1)==correct && new_tab(i-1,1)==correct && new_tab(i+1,1)==incorrect
+        if new_tab(i,1)==1 && new_tab(i-1,1)==1 && new_tab(i+1,1)==0
             pre_errors(1,end+1)=new_tab(i,2);
             %if con/incon included
             if n==3
-                if new_tab(i,3)==incongruent
+                if new_tab(i,3)=="incongruent"
                     incon_pre_error(1,end+1)=new_tab(i,2);
-                elseif new_tab(i,3)==congruent
+                elseif new_tab(i,3)=="congruent"
                     con_pre_error(1,end+1)=new_tab(i,2);
                 end
             end
@@ -65,13 +65,13 @@ function [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(tab, co
     end
     for j=2:m
         %post-correct
-        if new_tab(i,1)==correct && new_tab(i-1,1)=correct
+        if new_tab(i,1)==1 && new_tab(i-1,1)=1
             post_corrects(1,end+1)=new_tab(i,2);
             %if con/incon included
             if n==3
-                if new_tab(i,3)==incongruent
+                if new_tab(i,3)=="incongruent"
                     incon_post_correct(1,end+1)=new_tab(i,2);
-                elseif new_tab(i,3)==congruent
+                elseif new_tab(i,3)=="congruent"
                     con_post_correct(1,end+1)=new_tab(i,2);
                 end
             end
@@ -105,9 +105,9 @@ function [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(tab, co
     count_pe=0;
     count_pc=0;
     for i=1:m-1
-        if new_tab(i,1)==incorrect && new_tab(i+1,1)==correct
+        if new_tab(i,1)==0 && new_tab(i+1,1)==1
             count_pe=count_pe+1;
-        elseif new_tab(i,1)==correct && new_tab(i+1,1)==correct
+        elseif new_tab(i,1)==1 && new_tab(i+1,1)==1
             count_pc=count_pc+1;
         end
     end
