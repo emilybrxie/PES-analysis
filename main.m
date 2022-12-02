@@ -33,5 +33,6 @@ cols = {'correct', 'rt', 'condition'};
 
 % Run PES calculation on each subject
 for i = 1:length(sub_list)
-    [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(CurrentTask(strcmp(CurrentTask{:,'worker_id'},sub_list{i}),:), cols);
+%     [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(CurrentTask(strcmp(CurrentTask{:,'worker_id'},sub_list{i}),:), cols);
+    [sub_list{i,2:7}] = PES_analysis(CurrentTask(strcmp(CurrentTask{:,'worker_id'},sub_list{i}),:), cols);
 end

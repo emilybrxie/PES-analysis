@@ -23,7 +23,6 @@ function [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(tab, co
 
     % Create a new table from tab and the columns specified by cols
     new_tab = tab(:,cols);
-    disp(size(new_tab));
     [m,n] = size(new_tab);
     
     post_errors=[];
@@ -39,40 +38,40 @@ function [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(tab, co
     %finding all RTs for trials fitting specific criteria
     for i=2:m-1
         %post-error
-        if new_tab(i,1)==1 && new_tab(i-1,1)==0 && new_tab(i+1,1)==1
-            post_errors(1,end+1)=new_tab(i,2);
+        if new_tab{i,1}==1 && new_tab{i-1,1}==0 && new_tab{i+1,1}==1
+            post_errors(1,end+1)=new_tab{i,2};
             %if con/incon included
             if n==3
-                if new_tab(i,3)=="incongruent"
-                    incon_post_error(1,end+1)=new_tab(i,2);
-                elseif new_tab(i,3)=="congruent"
-                    con_post_error(1,end+1)=new_tab(i,2);
+                if new_tab{i,3}=="incongruent"
+                    incon_post_error(1,end+1)=new_tab{i,2};
+                elseif new_tab{i,3}=="congruent"
+                    con_post_error(1,end+1)=new_tab{i,2};
                 end
             end
         end
         %pre-error
-        if new_tab(i,1)==1 && new_tab(i-1,1)==1 && new_tab(i+1,1)==0
-            pre_errors(1,end+1)=new_tab(i,2);
+        if new_tab{i,1}==1 && new_tab{i-1,1}==1 && new_tab{i+1,1}==0
+            pre_errors(1,end+1)=new_tab{i,2};
             %if con/incon included
             if n==3
-                if new_tab(i,3)=="incongruent"
-                    incon_pre_error(1,end+1)=new_tab(i,2);
-                elseif new_tab(i,3)=="congruent"
-                    con_pre_error(1,end+1)=new_tab(i,2);
+                if new_tab{i,3}=="incongruent"
+                    incon_pre_error(1,end+1)=new_tab{i,2};
+                elseif new_tab{i,3}=="congruent"
+                    con_pre_error(1,end+1)=new_tab{i,2};
                 end
             end
         end
     end
     for j=2:m
         %post-correct
-        if new_tab(i,1)==1 && new_tab(i-1,1)=1
-            post_corrects(1,end+1)=new_tab(i,2);
+        if new_tab{i,1}==1 && new_tab{i-1,1}==1
+            post_corrects(1,end+1)=new_tab{i,2};
             %if con/incon included
             if n==3
-                if new_tab(i,3)=="incongruent"
-                    incon_post_correct(1,end+1)=new_tab(i,2);
-                elseif new_tab(i,3)=="congruent"
-                    con_post_correct(1,end+1)=new_tab(i,2);
+                if new_tab{i,3}=="incongruent"
+                    incon_post_correct(1,end+1)=new_tab{i,2};
+                elseif new_tab{i,3}=="congruent"
+                    con_post_correct(1,end+1)=new_tab{i,2};
                 end
             end
         end
@@ -86,18 +85,16 @@ function [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(tab, co
 
     %corrected traditional (PES_tc)
     if n==3
-        PES_tc=(mean(incon_post_error)+mean(con_post_error))/2 - 
-        (mean(incon_post_correct)+mean(con_post_correct))/2;
+        PES_tc=(mean(incon_post_error)+mean(con_post_error))/2 - (mean(incon_post_correct)+mean(con_post_correct))/2;
     else
-        PES_tc=0;
+        PES_tc=NaN;
     end
 
     %corrected robust (PES_rc)
     if n==3
-        PES_rc=(mean(incon_post_error)+mean(con_post_error))/2 - 
-        (mean(incon_pre_error)+mean(con_pre_error))/2;
+        PES_rc=(mean(incon_post_error)+mean(con_post_error))/2 - (mean(incon_pre_error)+mean(con_pre_error))/2;
     else
-        PES_rc=0;
+        PES_rc=NaN;
     end
 
     
@@ -105,9 +102,9 @@ function [PES_ut, PES_ru, PES_tc, PES_rc, pe_acc, pc_acc] = PES_analysis(tab, co
     count_pe=0;
     count_pc=0;
     for i=1:m-1
-        if new_tab(i,1)==0 && new_tab(i+1,1)==1
+        if new_tab{i,1}==0 && new_tab{i+1,1}==1
             count_pe=count_pe+1;
-        elseif new_tab(i,1)==1 && new_tab(i+1,1)==1
+        elseif new_tab{i,1}==1 && new_tab{i+1,1}==1
             count_pc=count_pc+1;
         end
     end
